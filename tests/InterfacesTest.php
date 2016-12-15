@@ -1,5 +1,6 @@
 <?php
 
+use Peixinchen\Exceptions\Interfaces\BaseException;
 use Peixinchen\Exceptions\Interfaces\BadRequest;
 use Peixinchen\Exceptions\Interfaces\Forbidden;
 use Peixinchen\Exceptions\Interfaces\NotFound;
@@ -64,5 +65,19 @@ class InterfacesTest extends PHPUnit_Framework_TestCase
     public function testThrowGatewayTimeout()
     {
         throw new GatewayTimeout(10, '', '');
+    }
+
+    public function testNotFoundGetAttr()
+    {
+        try {
+            throw new NotFound(10, 'error', 'internal');
+        } catch (BaseException $e) {
+            $this->assertEquals(10, $e->getCode());
+            $this->assertEquals(10, $e->getErrorCode());
+            $this->assertEquals('error', $e->getErrorMessage());
+            $this->assertEquals('internal', $e->getInternalMessage());
+            $this->assertEquals('internal', $e->getMessage());
+            $this->assertEquals(404, $e->getHttpStatus());
+        }
     }
 }

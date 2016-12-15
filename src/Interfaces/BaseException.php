@@ -17,7 +17,7 @@ abstract class BaseException extends Exception
      */
     public function getErrorCode()
     {
-        return $this->getCode;
+        return $this->getCode();
     }
 
     /**
@@ -38,6 +38,16 @@ abstract class BaseException extends Exception
     public function getInternalMessage()
     {
         return $this->getMessage();
+    }
+
+    /**
+     * HTTP status
+     *
+     * @return int
+     */
+    public function getHttpStatus()
+    {
+        return $this->httpStatus;
     }
 
     /**
